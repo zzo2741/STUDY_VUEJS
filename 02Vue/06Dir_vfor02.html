@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>05Dir_vfor02</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        $(function () {
+            var vue = new Vue({
+                el: "#app",
+                data: {
+                    title: "디렉티브 : v-for02 > 객체배열사용",
+                    telLists: [{
+                            name: "이준승",
+                            tel: "010-3524-3467",
+                            age: 26
+                        },
+                        {
+                            name: "이정연",
+                            tel: "010-7479-6747",
+                            age: 24
+                        },
+                        {
+                            name: "이준모",
+                            tel: "010-3370-2741",
+                            age: 20
+                        },
+                        {
+                            name: "이경호",
+                            tel: "010-3970-2741",
+                            age: 55
+                        },
+                    ],
+                    gradeLists: [{
+                            name: '이준승',
+                            kor: 90,
+                            eng: 90,
+                            math: 95
+                        },
+                        {
+                            name: '이정연',
+                            kor: 90,
+                            eng: 85,
+                            math: 75
+                        },
+                        {
+                            name: '이준모',
+                            kor: 80,
+                            eng: 90,
+                            math: 75
+                        },
+                        {
+                            name: '이주연',
+                            kor: 60,
+                            eng: 75,
+                            math: 45
+                        }
+                    ]
+                },
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{title}}</h2>
+        <h3>전화번호부</h3>
+        <table border="1">
+            <tr>
+                <th>No</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>나이</th>
+            </tr>
+            <tr v-for='(mem, idx) in telLists'>
+                <td>{{idx+1}}</td>
+                <td>{{mem.name}}</td>
+                <td>{{mem.tel}}</td>
+                <td>{{mem.age}}</td>
+            </tr>
+        </table>
+        <!-- 
+            연습문제] 객체형 배열을 사용하여 다음 조건에 주어진 내용을 출력하시오. 
+            출력] 이름, 국어, 영어, 수학, 총점, 평균
+            Model데이터는 gradeLists를 사용한다. 
+        -->
+        <table border="2">
+            <tr>
+                <th>No</th>
+                <th>이름</th>
+                <th>국어</th>
+                <th>수학</th>
+                <th>영어</th>
+                <th>총점</th>
+                <th>평균</th>
+            </tr>
+            <tr v-for='(list, idx) in gradeLists'>
+                <td>{{idx+1}}</td>
+                <td>{{list.name}}</td>
+                <td>{{list.kor}}</td>
+                <td>{{list.eng}}</td>
+                <td>{{list.math}}</td>
+                <td>{{list.kor + list.eng + list.math}}</td>
+                <td>{{parseInt((list.kor + list.eng + list.math) / 3)}}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
