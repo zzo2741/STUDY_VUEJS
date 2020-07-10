@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>21Http1-promise2.html</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        /*
+            함수 생성시 프로미스 객체생성을 실행부에서 하고, ajax()를 통해
+            서버와 통신을 하도록 구성함. 요청 성공시 resolve()를 호출하고
+            실패시 reject()함수를 호출함. 
+            */
+        var promise1 = function () {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: "http://nakja.co.kr/kosmoAPI/json/board_list_json.php",
+                    type: "get",
+                    data: {
+                        tname: "nboard_jquery",
+                    },
+                    dataType: "json",
+                    success: function (rData) {
+                        //console.log("promise1(s):", rData);
+                        resolve(rData);
+                    },
+                    error: function (eData) {
+                        //console.log("promise(e):", eData.status+":"+eData.statusText);
+                        reject(eData.status + ":" + eData.statusText);
+                    },
+                });
+            });
+        };
+        var promise2 = function () {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: "http://sample.bmaster.kro.kr/contacts",
+                    type: "get",
+                    data: {
+                        pageno: 2,
+                    },
+                    dataType: "json",
+                    success: function (rData) {
+                        resolve(rData);
+                    },
+                    error: function (eData) {
+                        reject(eData.status + ":" + eData.statusText);
+                    },
+                });
+            });
+        };
+
+        /*
+        요청에 성공하여 resolve()함수를 호출하면 then()에서 결과를
+        받을 수 있다. then()은 여러개를 중첨해서 선언하는것이 가능하여
+        첫번째 then()에서 값을 return하면 두번째 then()에서 매개변수로 
+        받을 수 있다. 
+        */
+        promise1()
+            .then(function (rData) {
+                console.log("promise1[s]", rData);
+                //값을 리턴하면...
+                return "요기서 특정값을 리턴";
+            })
+            .catch(function (eData) {
+                console.log("returnData", returnData);
+            })
+            .then(function (returnData) {
+                //두번째 then()의 매개변스로 리턴값을 받을 수 있음
+                console.log("returnData", returnData);
+            });
+        /*
+        요청 URL이 잘못되어 요청이 실패하는 경우에는 reject()함수를
+        호출하고, 이때는 catch()에서 결과를 받을 수 있다. 
+        */
+        promise2()
+            .then(function (rData) {
+                console.log("promise2[s]", rData);
+            })
+            .catch(function (eData) {
+                console.log("promise2[e]", eData);
+            });
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>프로미스(Promise)</h2>
+    </div>
+</body>
+
+</html>
